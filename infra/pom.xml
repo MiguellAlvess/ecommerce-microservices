@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.miguelalves</groupId>
-	<artifactId>services</artifactId>
+	<artifactId>infra</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>services</name>
+	<name>infra</name>
 	<description/>
 	<url/>
 	<licenses>

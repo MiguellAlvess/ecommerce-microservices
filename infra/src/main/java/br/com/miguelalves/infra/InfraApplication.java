@@ -1,13 +1,13 @@
-package br.com.miguelalves.services;
+package br.com.miguelalves.infra;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ServicesApplication {
+public class InfraApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ServicesApplication.class, args);
+		SpringApplication.run(InfraApplication.class, args);
 	}
 
 }

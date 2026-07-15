@@ -1,10 +1,10 @@
-package br.com.miguelalves.services;
+package br.com.miguelalves.infra;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ServicesApplicationTests {
+class InfraApplicationTests {
 
 	@Test
 	void contextLoads() {
