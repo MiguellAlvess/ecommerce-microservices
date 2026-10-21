@@ -32,7 +32,7 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<OrderDTO> createOrder(@RequestBody CreateOrderDTO dto) {
-        Order order = orderService.createOrder(dto);
+        Order order = orderService.createOrder(orderMapper.toEntity(dto));
         OrderDTO response = orderMapper.toResponseDTO(order);
         return ResponseEntity.created(URI.create("/api/orders/" + order.getId())).body(response);
     }
