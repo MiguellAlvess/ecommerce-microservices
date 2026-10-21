@@ -22,5 +22,5 @@ public class Product {
     private String name;
 
     @Column(name = "unit_price", nullable = false, precision = 16, scale = 2)
-    private BigDecimal unit_price;
+    private BigDecimal unitPrice;
 }

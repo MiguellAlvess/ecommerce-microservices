@@ -1,7 +1,10 @@
 package br.com.miguelalves.order.validation;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
+import br.com.miguelalves.order.client.ProductsClient;
 import br.com.miguelalves.order.domain.Order;
 import br.com.miguelalves.order.dto.CreateOrderDTO;
 import br.com.miguelalves.order.dto.OrderItemDTO;
@@ -9,11 +12,13 @@ import br.com.miguelalves.order.dto.OrderItemDTO;
 @Component
 public class OrderValidator {
 
-    public void validate(Order order) {
+    private final ProductsClient productsClient;
 
-        if (order.getItems().stream().anyMatch(item -> item.getQuantity() <= 0)) {
-            throw new IllegalArgumentException("Invalid quantity");
-        }
+    public OrderValidator(ProductsClient productsClient) {
+        this.productsClient = productsClient;
+    }
+
+    public void validate(Order order) {
 
     }
 
