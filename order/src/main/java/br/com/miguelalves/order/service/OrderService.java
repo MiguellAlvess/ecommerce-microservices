@@ -63,6 +63,15 @@ public class OrderService {
 
     @Transactional
     public void addNewPayment(Long orderId, String cardData, PaymentMethod paymentMethod) {
+        if (orderId == null || orderId <= 0) {
+            throw new OrderValidationException(
+                    "INVALID_ORDER_ID",
+                    "O identificador do pedido deve ser maior que zero");
+        }
+
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new OrderNotFoundException(orderId));
+
         if (cardData == null || cardData.isBlank()) {
             throw new OrderValidationException(
                     "INVALID_PAYMENT_DATA",
@@ -73,9 +82,6 @@ public class OrderService {
                     "INVALID_PAYMENT_METHOD",
                     "O método de pagamento é obrigatório");
         }
-
-        var order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new OrderNotFoundException(orderId));
         PaymentData paymentData = new PaymentData(cardData, paymentMethod);
         order.setPaymentData(paymentData);
         order.setStatus(OrderStatus.PLACED);
