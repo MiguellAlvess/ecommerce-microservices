@@ -6,8 +6,11 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.miguelalves.order.client.BankingServiceClient;
 import br.com.miguelalves.order.domain.Order;
 import br.com.miguelalves.order.domain.OrderStatus;
+import br.com.miguelalves.order.domain.PaymentData;
+import br.com.miguelalves.order.domain.PaymentMethod;
 import br.com.miguelalves.order.mapper.OrderMapper;
 import br.com.miguelalves.order.exception.OrderNotFoundException;
+import br.com.miguelalves.order.exception.OrderValidationException;
 import br.com.miguelalves.order.repository.OrderItemRepository;
 import br.com.miguelalves.order.repository.OrderRepository;
 import br.com.miguelalves.order.validation.OrderValidator;
@@ -56,6 +59,31 @@ public class OrderService {
         }
         order.setStatus(OrderStatus.PAID);
         orderRepository.save(order);
+    }
+
+    @Transactional
+    public void addNewPayment(Long orderId, String cardData, PaymentMethod paymentMethod) {
+        if (cardData == null || cardData.isBlank()) {
+            throw new OrderValidationException(
+                    "INVALID_PAYMENT_DATA",
+                    "Os dados do cartão são obrigatórios");
+        }
+        if (paymentMethod == null) {
+            throw new OrderValidationException(
+                    "INVALID_PAYMENT_METHOD",
+                    "O método de pagamento é obrigatório");
+        }
+
+        var order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new OrderNotFoundException(orderId));
+        PaymentData paymentData = new PaymentData(cardData, paymentMethod);
+        order.setPaymentData(paymentData);
+        order.setStatus(OrderStatus.PLACED);
+        order.setNotes("Novo pagamento realizado, aguardando aprovação do pagamento.");
+        String newPaymentKey = bankingServiceClient.paymentRequest(order);
+        order.setPaymentKey(newPaymentKey);
+        orderRepository.save(order);
+
     }
 
 }

@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.miguelalves.order.dto.CreateNewPaymentDTO;
 import br.com.miguelalves.order.dto.CreateOrderDTO;
 import br.com.miguelalves.order.dto.OrderDTO;
-
+import br.com.miguelalves.order.dto.PaymentDataDTO;
 import br.com.miguelalves.order.mapper.OrderMapper;
 import br.com.miguelalves.order.domain.Order;
 
@@ -35,6 +36,12 @@ public class OrderController {
         Order order = orderService.createOrder(orderMapper.toEntity(dto));
         OrderDTO response = orderMapper.toResponseDTO(order);
         return ResponseEntity.created(URI.create("/api/orders/" + order.getId())).body(response);
+    }
+
+    @PostMapping("/payments")
+    public ResponseEntity<Object> addNewPayment(@RequestBody CreateNewPaymentDTO dto) {
+        orderService.addNewPayment(dto.orderId(), dto.cardData(), dto.paymentMethod());
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}")
