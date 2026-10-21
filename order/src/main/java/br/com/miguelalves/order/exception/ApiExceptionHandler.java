@@ -1,4 +1,4 @@
-package br.com.miguelalves.order.controller;
+package br.com.miguelalves.order.exception;
 
 import java.time.Instant;
 
@@ -8,9 +8,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import br.com.miguelalves.order.dto.ApiErrorDTO;
-import br.com.miguelalves.order.exception.ExternalServiceException;
-import br.com.miguelalves.order.exception.OrderNotFoundException;
-import br.com.miguelalves.order.exception.OrderValidationException;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestControllerAdvice

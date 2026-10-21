@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.miguelalves.order.client.BankingServiceClient;
 import br.com.miguelalves.order.domain.Order;
-import br.com.miguelalves.order.dto.CreateOrderDTO;
+import br.com.miguelalves.order.domain.OrderStatus;
 import br.com.miguelalves.order.mapper.OrderMapper;
 import br.com.miguelalves.order.exception.OrderNotFoundException;
 import br.com.miguelalves.order.repository.OrderItemRepository;
@@ -42,6 +42,20 @@ public class OrderService {
     public Order findById(Long id) {
         return orderRepository.findById(id)
                 .orElseThrow(() -> new OrderNotFoundException(id));
+    }
+
+    public void updatePaymentStatus(Long id, String paymentKey, Boolean status, String notes) {
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new OrderNotFoundException(id));
+        if (!order.getPaymentKey().equals(paymentKey)) {
+            throw new IllegalArgumentException("Chave de pagamento inválida para o pedido " + id);
+        }
+        if (!status) {
+            order.setStatus(OrderStatus.PAYMENT_ERROR);
+            order.setNotes(notes);
+        }
+        order.setStatus(OrderStatus.PAID);
+        orderRepository.save(order);
     }
 
 }
