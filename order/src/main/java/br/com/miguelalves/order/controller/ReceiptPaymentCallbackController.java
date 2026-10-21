@@ -11,7 +11,7 @@ import br.com.miguelalves.order.dto.ReceiptPaymentCallbackDTO;
 import br.com.miguelalves.order.service.OrderService;
 
 @RestController
-@RequestMapping("/pedidos/callback-pagamentos")
+@RequestMapping("/api/orders/payment-callback")
 public class ReceiptPaymentCallbackController {
 
     private OrderService orderService;
