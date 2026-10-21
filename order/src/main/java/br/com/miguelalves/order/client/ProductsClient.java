@@ -12,6 +12,6 @@ import br.com.miguelalves.order.client.represetation.ProductRepresetation;
 @FeignClient(name = "products", url = "${ecommerce.orders.clients.products.url}")
 public interface ProductsClient {
 
-    @GetMapping
+    @GetMapping("/{id}")
     ResponseEntity<List<ProductRepresetation>> getProductById(@PathVariable("id") Long id);
 }
