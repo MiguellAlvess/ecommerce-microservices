@@ -17,3 +17,12 @@ spring:
 
 server:
   port: 8080
+
+ecommerce:
+  orders:
+    clients:
+      products:
+        url: http://localhost:8081/api/products
+
+      customers:
+        url: http://localhost:8082/api/customers
