@@ -26,3 +26,10 @@ ecommerce:
 
       customers:
         url: http://localhost:8082/api/customers
+  config:
+    kafka:
+      server-url: "http://localhost:29092"
+      topics:
+        paid-orders: "ecommerce.paid-orders"
+        orders-shipped: "ecommerce.orders-shipped"
+        invoiced-orders: "ecommerce.invoiced-orders"
